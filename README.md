@@ -16,7 +16,9 @@ Open http://localhost:4181 in two tabs: create a room in one, join it in the oth
 
 ```
 index.html, app.js   the page: lobby → create room → the room, and the button editor
-style.css            one fixed light look (no dark mode), so a light looks the same on both phones
+style.css            one fixed light look (no dark mode), so a light looks the same on both phones.
+                     Every screen fits the phone and the page never scrolls; only the editor and
+                     long lists of lights or buttons scroll, inside themselves, once they're full.
 server/server.js     the relay (Node, no dependencies)
 server/presets.json  the starting layouts offered when creating a room
 ```
