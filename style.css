@@ -57,7 +57,7 @@ button.link.strong { font-weight: 600; }
 .bottom { margin-top: auto; }
 
 /* Lobby */
-#lobby h1 { margin: 18vh 0 16px; text-align: center; font-size: 28px; font-weight: 600; }
+#lobby h1 { margin: 18vh 0 16px; text-align: center; font-size: 28px; font-weight: 600; color: #E24B4A; }
 .field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--soft); }
 .or { margin: 4px 0; text-align: center; font-size: 14px; color: var(--soft); }
 
