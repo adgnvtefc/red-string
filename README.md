@@ -28,7 +28,7 @@ server/presets.json  the starting layouts offered when creating a room
 A room has two **seats** and a list of **buttons**. Each button belongs to one seat: only that seat sees it as a button, and the other seat sees it as a light. So the two sides can be different (the crossword preset gives the solver "Go ahead" and the watcher three buttons) or the same.
 
 - **Creating a room:** pick a code (a random one is filled in), a preset, and adjust both seats' buttons: tap the dot to pick from 9 colors, type to rename, × to remove. The creator takes seat 1; whoever joins gets seat 2. A third person is told the room is full.
-- **In the room:** the other person's lights on top, your buttons at the bottom. ✎ opens the same editor; anyone can change either seat's buttons, and saving updates both phones.
+- **In the room:** the other person's lights on top, your buttons at the bottom. Once the relay confirms a press, "<label> pressed" shows above your buttons for 2 seconds; if it fails, the button shakes instead. A light or that text pressed again while showing blinks off and back on, so every press shows. ✎ opens the same editor; anyone can change either seat's buttons, and saving updates both phones.
 - **Connections:** each phone keeps a Server-Sent Events stream open to the relay; presses and edits are plain POSTs. If a phone loses its connection (screen locked, reload, bad signal), its seat is kept for 2 minutes. A reload in the same tab rejoins the room (the seat is kept in that tab's sessionStorage). × leaves at once. A room with no one left closes.
 
 Relay API (every POST body is JSON sent as `text/plain`, so browsers skip the CORS preflight):

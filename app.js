@@ -157,7 +157,7 @@ let me = null;        // {code, seat, token}
 let room = null;      // the latest state from the relay: {code, seats, buttons}
 let stream = null;
 let reconnecting = false;
-const lit = new Map();   // button id → timer that turns its light off
+const timers = new WeakMap();   // a showing light or "pressed" text → the timer that hides it
 
 function enterRoom(seat) {
   me = seat;
@@ -166,6 +166,7 @@ function enterRoom(seat) {
   $('room-code').textContent = seat.code;
   $('lights').replaceChildren();
   $('mine').replaceChildren();
+  $('said').classList.remove('on');
   renderPresence();
   show('room');
   connect();
@@ -230,8 +231,6 @@ function renderRoom() {
   renderPresence();
   const theirs = room.buttons.filter(b => b.seat !== me.seat);
   const mine = room.buttons.filter(b => b.seat === me.seat);
-  for (const timer of lit.values()) clearTimeout(timer);
-  lit.clear();
   $('lights').replaceChildren(...(theirs.length
     ? theirs.map(b => h('div', { class: 'light', id: `light-${b.id}`, style: { '--c': b.color } }, h('span', { class: 'dot' }), b.label))
     : [h('p', { class: 'empty' }, 'No buttons on their side yet.')]));
@@ -240,26 +239,33 @@ function renderRoom() {
     : [h('p', { class: 'empty' }, 'You have no buttons yet. Tap ✎ to add some.')]));
 }
 
-// Turns a light on for LIGHT_MS. Pressed again while it's on, it blinks off first, so every press shows.
-function light(id) {
-  const el = $(`light-${id}`);
-  if (!el) return;
-  clearTimeout(lit.get(id));
+// Shows an element (class `on`) for LIGHT_MS. If it's already showing, it blinks off for BLINK_MS
+// first, so every press shows. `update` runs just before it comes on (e.g. to set its text).
+function flash(el, update = () => {}) {
+  clearTimeout(timers.get(el));
   const on = () => {
+    update();
     el.classList.add('on');
-    lit.set(id, setTimeout(() => { el.classList.remove('on'); lit.delete(id); }, LIGHT_MS));
+    timers.set(el, setTimeout(() => el.classList.remove('on'), LIGHT_MS));
   };
   if (!el.classList.contains('on')) return on();
   el.classList.remove('on');
-  lit.set(id, setTimeout(on, BLINK_MS));
+  timers.set(el, setTimeout(on, BLINK_MS));
 }
 
+// Their press: its light.
+function light(id) {
+  const el = $(`light-${id}`);
+  if (el) flash(el);
+}
+
+// Your press: once the relay confirms it, "<label> pressed" above your buttons. If it fails, the button shakes.
 async function press(button, el) {
   el.classList.remove('failed');
   el.classList.add('sent');
   setTimeout(() => el.classList.remove('sent'), 150);
   const { status } = await post(`/v1/rooms/${me.code}/press`, { token: me.token, id: button.id });
-  if (status === 204) return;
+  if (status === 204) return flash($('said'), () => { $('said').textContent = `${button.label} pressed`; });
   void el.offsetWidth;   // restart the shake animation
   el.classList.add('failed');
 }

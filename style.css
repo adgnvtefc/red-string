@@ -90,6 +90,8 @@ button.link.strong { font-weight: 600; }
 .light.on { background: var(--c); color: #fff; }
 .light.on .dot { background: #fff; }
 .empty { margin: 0; font-size: 14px; color: var(--faint); }
+.said { margin: 0; height: 22px; text-align: center; font-size: 15px; color: var(--soft); opacity: 0; transition: opacity .15s; }
+.said.on { opacity: 1; }
 .mine { padding-top: 14px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
 .screen > .mine { flex: 0 1 auto; min-height: 0; max-height: 60%; overflow-y: auto; overscroll-behavior: contain; }
 .mine > * { flex: none; }
