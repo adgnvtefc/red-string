@@ -1,0 +1,25 @@
+[
+  {
+    "id": "crossword",
+    "name": "Crossword",
+    "buttons": [
+      { "seat": 1, "label": "Go ahead", "color": "#1D9E75" },
+      { "seat": 2, "label": "I know", "color": "#7F77DD" },
+      { "seat": 2, "label": "Next", "color": "#D85A30" },
+      { "seat": 2, "label": "No idea", "color": "#5F5E5A" }
+    ]
+  },
+  {
+    "id": "one-button",
+    "name": "One button",
+    "buttons": [
+      { "seat": 1, "label": "Hey", "color": "#E24B4A" },
+      { "seat": 2, "label": "Hey", "color": "#E24B4A" }
+    ]
+  },
+  {
+    "id": "blank",
+    "name": "Blank",
+    "buttons": []
+  }
+]

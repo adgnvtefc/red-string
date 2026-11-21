@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<title>red-string</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 1. Lobby: your name, then create a room or join one by code -->
+<section id="lobby" class="screen">
+  <h1>red-string</h1>
+  <label class="field">Your name
+    <input id="name" maxlength="20" autocomplete="nickname" placeholder="Alex">
+  </label>
+  <button id="go-create" class="primary">Create room</button>
+  <p class="or">or join one</p>
+  <form id="join" class="row">
+    <input id="join-code" class="code" maxlength="4" placeholder="CODE" autocapitalize="characters" autocomplete="off" spellcheck="false">
+    <button>Join</button>
+  </form>
+  <p id="lobby-error" class="error" role="alert"></p>
+</section>
+
+<!-- 2. Create room: pick a code and lay out both seats' buttons -->
+<section id="create" class="screen" hidden>
+  <header class="bar">
+    <button id="create-back" class="icon" aria-label="Back">←</button>
+    <span class="title">New room</span>
+    <span class="icon"></span>
+  </header>
+  <div class="row">
+    <input id="create-code" class="code" maxlength="4" autocapitalize="characters" autocomplete="off" spellcheck="false" aria-label="Room code">
+    <button id="reroll" class="icon" aria-label="Random code">↻</button>
+  </div>
+  <select id="preset" aria-label="Preset"></select>
+  <div id="create-editor"></div>
+  <p id="create-error" class="error" role="alert"></p>
+  <button id="open-room" class="primary bottom">Open room</button>
+</section>
+
+<!-- 3. The room: their lights on top, your buttons below -->
+<section id="room" class="screen" hidden>
+  <header class="bar">
+    <span id="room-code" class="title code-text"></span>
+    <span>
+      <button id="edit" class="icon" aria-label="Edit buttons">✎</button>
+      <button id="leave" class="icon" aria-label="Leave room">×</button>
+    </span>
+  </header>
+  <p id="presence" class="presence"></p>
+  <div id="lights" class="lights"></div>
+  <div id="mine" class="mine"></div>
+</section>
+
+<!-- The in-room editor, over the room -->
+<div id="sheet" class="sheet" hidden>
+  <div class="sheet-card">
+    <header class="bar">
+      <button id="sheet-cancel" class="link">Cancel</button>
+      <span class="title">Buttons</span>
+      <button id="sheet-save" class="link strong">Save</button>
+    </header>
+    <div id="sheet-editor"></div>
+    <p id="sheet-error" class="error" role="alert"></p>
+  </div>
+</div>
+
+<script src="app.js" type="module"></script>
+</body>
+</html>

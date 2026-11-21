@@ -1,0 +1,10 @@
+{
+  "name": "red-string",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "server": "node server/server.js",
+    "site": "python3 -m http.server 4181",
+    "test": "node --test server/"
+  }
+}
